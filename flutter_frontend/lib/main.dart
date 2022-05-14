@@ -1,7 +1,12 @@
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_frontend/basic_2d_movement.dart';
+import 'package:flame/game.dart';
 void main() {
-  runApp(const MyApp());
+
+  //runApp(const MyApp());
+  runApp(GameWidget(game: Basic2DMovement()));
+
 }
 
 class MyApp extends StatelessWidget {
@@ -49,6 +54,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int _doubleCounter = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -58,11 +64,39 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+      _doubleCounter = _counter*2;
     });
+  }
+
+  void _sayMyName(){
+
+    setState(){
+      print("ALEX RULES!");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    int streamedInt = 0;
+    IconData testIcon = IconData(1);
+    Icon icon = Icon(testIcon);
+    BottomNavigationBarItem item1 = BottomNavigationBarItem(icon: icon, label:"TEST"+streamedInt.toString());
+    BottomNavigationBarItem item2 = BottomNavigationBarItem(icon: icon,label:"AHH");
+
+    Stream<int> boatStream() async* {
+      for (int i = 1; i <= 10; i++) {
+        print("SENT boat no. " + i.toString());
+        await Future.delayed(Duration(seconds: 1));
+        yield i;
+      }
+    }
+
+    Stream<int> stream = boatStream();
+
+    stream.listen((receivedData) {
+      print("RECEIVED boat no. " + receivedData.toString());
+    });
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -98,10 +132,20 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
+
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+
+            const Text(
+              'AHHHHHHH:',
+            ),
+            Text(
+              '$_doubleCounter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+
           ],
         ),
       ),
@@ -110,6 +154,9 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavigationBar(items: [item1,item2],
+
+      ),
     );
   }
 }
