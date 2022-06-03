@@ -1,11 +1,11 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_frontend/basic_2d_movement.dart';
+import 'package:flutter_frontend/FlameController.dart';
 import 'package:flame/game.dart';
 void main() {
 
   //runApp(const MyApp());
-  runApp(GameWidget(game: Basic2DMovement()));
+  runApp(GameWidget(game: FlameController()));
 
 }
 
